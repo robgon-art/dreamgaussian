@@ -409,6 +409,12 @@ class GUI:
             mesh = self.renderer.gaussians.extract_mesh(path, self.opt.density_thresh)
             mesh.write_ply(path)
 
+        elif mode == 'geo+mesh':
+            path = os.path.join(self.opt.outdir, self.opt.save_path + '_mesh.' + self.opt.mesh_format)
+            mesh = self.renderer.gaussians.extract_mesh(path, self.opt.density_thresh)
+            mesh.auto_normal()
+            mesh.write(path)
+
         elif mode == 'geo+tex':
             path = os.path.join(self.opt.outdir, self.opt.save_path + '_mesh.' + self.opt.mesh_format)
             mesh = self.renderer.gaussians.extract_mesh(path, self.opt.density_thresh)
