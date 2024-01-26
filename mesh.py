@@ -617,6 +617,12 @@ class Mesh:
             fp.write(f"Ns 0 \n")
             fp.write(f"map_Kd {os.path.basename(albedo_path)} \n")
 
-        albedo = self.albedo.detach().cpu().numpy()
-        albedo = (albedo * 255).astype(np.uint8)
-        cv2.imwrite(albedo_path, cv2.cvtColor(albedo, cv2.COLOR_RGB2BGR))
+        albedo = self.albedo
+
+        if albedo is not None:
+            albedo = albedo.detach().cpu().numpy()
+            albedo = (albedo * 255).astype(np.uint8)
+            cv2.imwrite(albedo_path, cv2.cvtColor(albedo, cv2.COLOR_RGB2BGR))
+        else:
+            # Handle the case when albedo is None. 
+            print("Warning: albedo is None, skipping image write.")
